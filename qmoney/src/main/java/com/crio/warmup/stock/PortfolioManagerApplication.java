@@ -52,7 +52,7 @@ public class PortfolioManagerApplication {
     File file = resolveFileFromResources(args[0]);
     Stock[] trades = objectMapper.readValue(file, Stock[].class);
     List<String> lst = new ArrayList<String>();        
-    for (int i = 0; i < lst.size(); i++) {
+    for (int i = 0; i < trades.length; i++) {
       lst.add(trades[i].getSymbol());
     }
     return lst;
