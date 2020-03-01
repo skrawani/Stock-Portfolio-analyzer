@@ -58,6 +58,32 @@ public class TiingoCandle implements Candle {
     this.date = timeStamp;
   }
 
+  @Override 
+  public boolean equals(Object object) {
+    if (this == object) {
+      return true;
+    } 
+    if (object == null || getClass() != object.getClass()) {
+      return false;
+    } 
+    if (!super.equals(object)) {
+      return false;
+    } 
+    TiingoCandle that = (TiingoCandle) object;
+    return java.util.Objects.equals(this.getClose(), that.getClose());
+  }
+
+  @Override  
+  public int hashCode() {
+    return java.util.Objects.hash(super.hashCode(), this.getClose());
+  }
+
+  // @Override     
+  public int compareTo(TiingoCandle candidate) {    
+    return (this.getClose() < candidate.getClose() ? -1 : 
+              (this.getClose().equals(candidate.getClose())  ? 0 : 1));     
+  }  
+
   @Override
   public String toString() {
     return "TiingoCandle{"
