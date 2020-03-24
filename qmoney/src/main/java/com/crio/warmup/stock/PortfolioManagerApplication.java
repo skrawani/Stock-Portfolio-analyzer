@@ -9,6 +9,7 @@ import com.crio.warmup.stock.log.UncaughtExceptionHandler;
 import com.crio.warmup.stock.portfolio.PortfolioManager;
 import com.crio.warmup.stock.portfolio.PortfolioManagerFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
@@ -155,20 +156,22 @@ public class PortfolioManagerApplication {
 
 
   public static List<AnnualizedReturn> mainCalculateReturnsAfterRefactor(String[] args)
-      throws Exception {
-    String file = args[0];
+      throws IOException, URISyntaxException {
+    
+    // String file = args[0];
+    File file = resolveFileFromResources(args[0]);
     LocalDate endDate = LocalDate.parse(args[1]);
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule()); 
+
+    objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true);
     PortfolioTrade[] trades = objectMapper.readValue(file, PortfolioTrade[].class);
+
+    
     RestTemplate restTemplate = new RestTemplate();
     PortfolioManager portfolioManager = PortfolioManagerFactory.getPortfolioManager(restTemplate);
     return portfolioManager.calculateAnnualizedReturn(Arrays.asList(trades), endDate);
   }
-
-  // private static PortfolioManagerFactory PortfolioManagerFactory(RestTemplate restTemplate) {
-  //   return null;
-  // }
 
   public static void main(String[] args) throws Exception {
     Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());

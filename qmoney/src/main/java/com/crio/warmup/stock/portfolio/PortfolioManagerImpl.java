@@ -1,8 +1,10 @@
+
 package com.crio.warmup.stock.portfolio;
 
 import com.crio.warmup.stock.dto.AnnualizedReturn;
 import com.crio.warmup.stock.dto.Candle;
 import com.crio.warmup.stock.dto.PortfolioTrade;
+import com.crio.warmup.stock.dto.TiingoCandle;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -25,6 +27,7 @@ public class PortfolioManagerImpl implements PortfolioManager {
 
   // Caution: Do not delete or modify the constructor, or else your build will
   // break!
+  // Caution: Do not delete or modify the constructor, or else your build will break!
   // This is absolutely necessary for backward compatibility
   protected PortfolioManagerImpl(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
@@ -68,7 +71,7 @@ public class PortfolioManagerImpl implements PortfolioManager {
 
 
         try {
-          List<Candle> collection = getStockQuote(portfolioTrades.get(i).getSymbol(), portfolioTrades.get(i).getPurchaseDate(), endDate );
+          List<TiingoCandle> collection = getStockQuote(portfolioTrades.get(i).getSymbol(), portfolioTrades.get(i).getPurchaseDate(), endDate );
           if( collection.size() <= 0) return null;
           xyz.add(logicCARR(endDate, portfolioTrades.get(i),
           collection.get(0).getOpen(), collection.get(collection.size() - 1).getClose()));
@@ -102,15 +105,15 @@ public class PortfolioManagerImpl implements PortfolioManager {
   //  replacing the placeholders with actual parameters.
 
 
-  public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to)
+  public List<TiingoCandle> getStockQuote(String symbol, LocalDate from, LocalDate to)
       throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
     mapper.registerModule(new JavaTimeModule());  
     // RestTemplate restTemplate = new RestTemplate();
     String uri = buildUri(symbol, from, to);
     String result = restTemplate.getForObject(uri, String.class);
-    List<Candle> collection = mapper.readValue(result, 
-    new TypeReference<ArrayList<Candle>>() {  
+    List<TiingoCandle> collection = mapper.readValue(result, 
+    new TypeReference<ArrayList<TiingoCandle>>() {  
         });
     return collection;
   }
