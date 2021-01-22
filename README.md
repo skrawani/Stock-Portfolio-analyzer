@@ -16,7 +16,7 @@ During the course of this Micro-Experience, the developer:
 </ul>
 <div style="text-align: center;">
     <img alt="image alt text" src="./screenshots/ME_ME_QMONEY_MODULE_PROJECT_REPORT_image_0.png" style="max-width: 750px;">
-    <p style="text-align: center;">QMoney Architecture</p>
+    <div align="center">QMoney Architecture</div>
     <img alt="image alt text" src="./screenshots/ME_ME_QMONEY_MODULE_PROJECT_REPORT_image_1.png" style="max-width: 750px;">
-    <p style="text-align: center;">QMoney Portfolio Manager Interface</p>
+    <div align="center">QMoney Portfolio Manager Interface</div>
 </div>
